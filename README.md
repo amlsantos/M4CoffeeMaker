@@ -16,9 +16,9 @@ If the pot is removed from the warmer plate while water is being sprayed over th
 - The Brew button. This momentary button starts the brewing cycle. It has an indicator that lights up when the brewing cycle is over and the coffee is ready.
 - A pressure-relief valve that opens to reduce the pressure in the boiler. The drop in pressure stops the flow of water to the filter. The value can be opened or closed.
 
-Chapter 6 of the puralsight course "Encapsualtion and SOLID", from Mark Seemann.
+Chapter 6 of the Pluralsight course "Encapsulation and SOLID", from Mark Seemann.
 
 ###### References 
-- [The coffee maker problem](https://files.meetup.com/10912822/CoffeeMaker.pdf)
+- [The coffee maker problem](https://s3.amazonaws.com/content.udacity-data.com/courses/gt-cs6310/readings/gt-sad-martin-chapter-11.pdf)
 - [Encapsulation and SOLID](https://www.pluralsight.com/courses/encapsulation-solid)
 
