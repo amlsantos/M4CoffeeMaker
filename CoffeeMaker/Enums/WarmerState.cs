@@ -1,7 +1,6 @@
-﻿namespace Enums
+﻿namespace CoffeeMaker.Enums;
+
+public enum WarmerState
 {
-    public enum WarmerState
-    {
-        ON, OFF
-    };
-}
+    ON, OFF
+};

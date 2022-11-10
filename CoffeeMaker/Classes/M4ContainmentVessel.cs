@@ -1,82 +1,81 @@
-﻿using CoffeeMaker.Interfaces;
-using Enums;
+﻿using CoffeeMaker.Enums;
+using CoffeeMaker.Interfaces;
 
-namespace CoffeeMaker.Classes
+namespace CoffeeMaker.Classes;
+
+public class M4ContainmentVessel : ContainmentVessel, Pollable
 {
-    public class M4ContainmentVessel : ContainmentVessel, Pollable
+    private readonly ICoffeeMaker _api;
+    private WarmerPlateStatus lastPotStatus;
+
+    public M4ContainmentVessel(ICoffeeMaker coffeeMaker)
     {
-        private readonly ICoffeeMaker _api;
-        private WarmerPlateStatus lastPotStatus;
+        _api = coffeeMaker;
+    }
 
-        public M4ContainmentVessel(ICoffeeMaker coffeeMaker)
+    public override bool IsReady()
+    {
+        var status = _api.GetWarmerPlateStatus();
+
+        return status == WarmerPlateStatus.POT_EMPTY;
+    }
+
+    public override void Start()
+    {
+        isBrewing = true;
+    }
+
+    public void Poll()
+    {
+        var potStatus = _api.GetWarmerPlateStatus();
+        if (potStatus != lastPotStatus)
         {
-            _api = coffeeMaker;
+            if (isBrewing)
+            {
+                HandleBrewingEvent(potStatus);
+            }
+            else if (!isComplete)
+            {
+                HandleIncompleteEvent(potStatus);
+            }
+
+            lastPotStatus = potStatus;
         }
+    }
 
-        public override bool IsReady()
+    private void HandleBrewingEvent(WarmerPlateStatus potStatus)
+    {
+        if (potStatus == WarmerPlateStatus.POT_NOT_EMPTY)
         {
-            var status = _api.GetWarmerPlateStatus();
-
-            return status == WarmerPlateStatus.POT_EMPTY;
+            ContainerAvailable();
+            _api.SetWarmerState(WarmerState.ON);
         }
-
-        public override void Start()
+        else if (potStatus == WarmerPlateStatus.WARMER_EMPTY)
         {
-            isBrewing = true;
+            ContainerUnavailable();
+            _api.SetWarmerState(WarmerState.OFF);
         }
-
-        public void Poll()
+        else
         {
-            var potStatus = _api.GetWarmerPlateStatus();
-            if (potStatus != lastPotStatus)
-            {
-                if (isBrewing)
-                {
-                    HandleBrewingEvent(potStatus);
-                }
-                else if (!isComplete)
-                {
-                    HandleIncompleteEvent(potStatus);
-                }
-
-                lastPotStatus = potStatus;
-            }
+            ContainerAvailable();
+            _api.SetWarmerState(WarmerState.OFF);
         }
+    }
 
-        private void HandleBrewingEvent(WarmerPlateStatus potStatus)
+    private void HandleIncompleteEvent(WarmerPlateStatus potStatus)
+    {
+        if (potStatus == WarmerPlateStatus.POT_NOT_EMPTY)
         {
-            if (potStatus == WarmerPlateStatus.POT_NOT_EMPTY)
-            {
-                ContainerAvailable();
-                _api.SetWarmerState(WarmerState.ON);
-            }
-            else if (potStatus == WarmerPlateStatus.WARMER_EMPTY)
-            {
-                ContainerUnavailable();
-                _api.SetWarmerState(WarmerState.OFF);
-            }
-            else
-            {
-                ContainerAvailable();
-                _api.SetWarmerState(WarmerState.OFF);
-            }
+            _api.SetWarmerState(WarmerState.ON);
         }
-
-        private void HandleIncompleteEvent(WarmerPlateStatus potStatus)
+        else if (potStatus == WarmerPlateStatus.WARMER_EMPTY)
         {
-            if (potStatus == WarmerPlateStatus.POT_NOT_EMPTY)
-            {
-                _api.SetWarmerState(WarmerState.ON);
-            }
-            else if (potStatus == WarmerPlateStatus.WARMER_EMPTY)
-            {
-                _api.SetWarmerState(WarmerState.OFF);
-            }
-            else
-            {
-                _api.SetWarmerState(WarmerState.OFF);
-                DeclareComplete();
-            }
+            _api.SetWarmerState(WarmerState.OFF);
+        }
+        else
+        {
+            _api.SetWarmerState(WarmerState.OFF);
+            DeclareComplete();
         }
     }
 }

@@ -1,9 +1,8 @@
-﻿namespace Enums
+﻿namespace CoffeeMaker.Enums;
+
+public enum WarmerPlateStatus
 {
-    public enum WarmerPlateStatus
-    {
-        WARMER_EMPTY,
-        POT_EMPTY,
-        POT_NOT_EMPTY
-    };
-}
+    WARMER_EMPTY,
+    POT_EMPTY,
+    POT_NOT_EMPTY
+};

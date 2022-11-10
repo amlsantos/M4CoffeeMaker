@@ -1,7 +1,6 @@
-﻿namespace Enums
+﻿namespace CoffeeMaker.Enums;
+
+public enum BoilerState
 {
-    public enum BoilerState
-    {
-        ON, OFF
-    };
-}
+    ON, OFF
+};

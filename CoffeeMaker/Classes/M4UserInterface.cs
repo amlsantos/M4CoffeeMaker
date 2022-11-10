@@ -1,43 +1,42 @@
-﻿using CoffeeMaker.Interfaces;
-using Enums;
+﻿using CoffeeMaker.Enums;
+using CoffeeMaker.Interfaces;
 
-namespace CoffeeMaker.Classes
+namespace CoffeeMaker.Classes;
+
+public class M4UserInterface : UserInterface, Pollable
 {
-    public class M4UserInterface : UserInterface, Pollable
+    private readonly ICoffeeMaker _api;
+
+    public M4UserInterface(ICoffeeMaker cm)
     {
-        private readonly ICoffeeMaker _api;
+        _api = cm;
+    }
 
-        public M4UserInterface(ICoffeeMaker cm)
+    private void CheckButton()
+    {
+        var status = _api.GetBrewButtonStatus();
+        if (status == BrewButtonStatus.PUSHED)
         {
-            _api = cm;
+            base.StartBrewing();
         }
+    }
 
-        private void CheckButton()
+    public void Poll()
+    {
+        var status = _api.GetBrewButtonStatus();
+        if (status == BrewButtonStatus.PUSHED)
         {
-            var status = _api.GetBrewButtonStatus();
-            if (status == BrewButtonStatus.PUSHED)
-            {
-                base.StartBrewing();
-            }
+            base.StartBrewing();
         }
+    }
 
-        public void Poll()
-        {
-            var status = _api.GetBrewButtonStatus();
-            if (status == BrewButtonStatus.PUSHED)
-            {
-                base.StartBrewing();
-            }
-        }
+    public override void Done()
+    {
+        _api.SetIndicatorState(IndicatorState.ON);
+    }
 
-        public override void Done()
-        {
-            _api.SetIndicatorState(IndicatorState.ON);
-        }
-
-        public override void CompleteCycle()
-        {
-            _api.SetIndicatorState(IndicatorState.OFF);
-        }
+    public override void CompleteCycle()
+    {
+        _api.SetIndicatorState(IndicatorState.OFF);
     }
 }

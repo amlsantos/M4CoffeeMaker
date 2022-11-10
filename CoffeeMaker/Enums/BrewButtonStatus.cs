@@ -1,7 +1,6 @@
-﻿namespace Enums
+﻿namespace CoffeeMaker.Enums;
+
+public enum BrewButtonStatus
 {
-    public enum BrewButtonStatus
-    {
-        PUSHED, NOT_PUSHED
-    };
-}
+    PUSHED, NOT_PUSHED
+};

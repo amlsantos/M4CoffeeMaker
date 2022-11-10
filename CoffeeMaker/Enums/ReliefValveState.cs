@@ -1,7 +1,6 @@
-﻿namespace Enums
+﻿namespace CoffeeMaker.Enums;
+
+public enum ReliefValveState
 {
-    public enum ReliefValveState
-    {
-        OPEN, CLOSED
-    };
-}
+    OPEN, CLOSED
+};

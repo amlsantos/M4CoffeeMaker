@@ -1,7 +1,6 @@
-﻿namespace CoffeeMaker.Interfaces
+﻿namespace CoffeeMaker.Interfaces;
+
+public interface Pollable
 {
-    public interface Pollable
-    {
-        void Poll();
-    }
+    void Poll();
 }

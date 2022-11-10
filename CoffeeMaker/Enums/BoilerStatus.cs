@@ -1,7 +1,6 @@
-﻿namespace Enums
+﻿namespace CoffeeMaker.Enums;
+
+public enum BoilerStatus
 {
-    public enum BoilerStatus
-    {
-        EMPTY, NOT_EMPTY
-    };
-}
+    EMPTY, NOT_EMPTY
+};

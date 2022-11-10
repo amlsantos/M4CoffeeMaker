@@ -1,7 +1,6 @@
-﻿namespace Enums
+﻿namespace CoffeeMaker.Enums;
+
+public enum IndicatorState
 {
-    public enum IndicatorState
-    {
-        ON, OFF
-    };
-}
+    ON, OFF
+};
