@@ -1,3 +1,6 @@
+![build](https://github.com/santos-an/M4CoffeeMaker/actions/workflows/build.yml/badge.svg)
+![test](https://github.com/santos-an/M4CoffeeMaker/actions/workflows/test.yml/badge.svg)
+
 # The Mark IV Special Coffee Maker
 
 #### Problem descrition
